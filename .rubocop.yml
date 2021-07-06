@@ -1,0 +1,15 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-performance
+  - rubocop-thread_safety
+  - rubocop-i18n
+
+AllCops:
+  NewCops: enable
+
+I18n/RailsI18n:
+  Enabled: true
+
+I18n/GetText:
+  Enabled: false
