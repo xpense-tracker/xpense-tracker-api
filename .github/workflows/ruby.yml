@@ -15,7 +15,7 @@ jobs:
       id: nvm
       run: echo ::set-output name=RUBYVERSION::$(cat .ruby-version)
 
-    - uses: actions/setup-ruby@v1
+    - uses: ruby/setup-ruby@v1
       with:
         ruby-version: '${{ steps.nvm.outputs.RUBYVERSION }}'
 
