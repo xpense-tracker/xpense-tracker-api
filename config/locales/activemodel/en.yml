@@ -1,0 +1,8 @@
+en:
+  activemodel:
+    errors:
+      models:
+        session:
+          attributes:
+            base:
+              authenticated: Invalid email or password

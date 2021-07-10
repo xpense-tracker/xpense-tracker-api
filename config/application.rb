@@ -39,5 +39,9 @@ module XpenseTrackerApi
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    config.i18n.load_path += Dir[
+      Rails.root.join('config/locales/activemodel/**/*.yml')
+    ]
   end
 end
