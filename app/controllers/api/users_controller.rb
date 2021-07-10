@@ -4,13 +4,13 @@ module Api
   # Register users
   class UsersController < ApplicationController
     def create
-      @user = User.new(user_params)
+      user = User.new(user_params)
 
-      if @user.save
+      if user.save
         # TODO: replace with real location
-        render json: @user, status: :created, location: nil
+        render json: user, status: :created, location: nil
       else
-        render json: @user, status: :unprocessable_entity
+        render json: user, status: :unprocessable_entity
       end
     end
 
