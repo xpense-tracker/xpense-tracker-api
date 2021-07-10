@@ -27,6 +27,6 @@ class Session
   end
 
   def authenticated
-    errors.add :base, :authenticated unless user.present?
+    errors.add :base, :authenticated if user.blank?
   end
 end
