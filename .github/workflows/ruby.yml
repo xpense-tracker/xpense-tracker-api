@@ -39,9 +39,9 @@ jobs:
           bundle install --jobs 4
 
   setup_db:
+    needs: install
     runs-on: ubuntu-latest
     name: Prepare database
-    steps:
     steps:
       - name: Migrate database
         # env:
@@ -61,7 +61,7 @@ jobs:
         run: bin/rubocop
 
   rspec:
-    needs: install
+    needs: setup_db
     runs-on: ubuntu-latest
     name: Run tests
 
