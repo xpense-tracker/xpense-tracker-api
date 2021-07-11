@@ -2,7 +2,7 @@ en:
   activemodel:
     errors:
       models:
-        session:
+        authenticated_user:
           attributes:
             base:
-              authenticated: Invalid email or password
+              not_authenticated: Invalid email or password

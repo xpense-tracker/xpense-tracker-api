@@ -4,7 +4,10 @@ module Api
   # Authenticates users
   class SessionsController < ApplicationController
     def create
-      session = Session.new(session_params)
+      session = Session.new(
+        AuthenticatedUser.new(credentials),
+        JwtCodec.new
+      )
 
       if session.valid?
         render json: session
@@ -15,8 +18,8 @@ module Api
 
     private
 
-    def session_params
-      params.require(:session).permit(:email, :password)
+    def credentials
+      params.require(:user).permit(:email, :password)
     end
   end
 end
