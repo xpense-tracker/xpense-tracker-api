@@ -11,19 +11,9 @@ env:
   RAILS_ENV: test
 
 jobs:
-  lint:
+  ci:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ruby/setup-ruby@v1
-      - name: Install Rubocop
-        run: gem install rubocop
-      - name: Run Rubocop
-        run: rubocop
-
-  test:
-    runs-on: ubuntu-latest
-    name: Run tests with RSpec
+    name: CI
     steps:
       - uses: actions/checkout@v2
 
@@ -46,15 +36,18 @@ jobs:
           bundle config set path .bundle
           bundle install --jobs 4
 
+      - name: Run Rubocop
+        run: bin/rubocop
+
       - name: Migrate database
-        # env:
-        #   DATABASE_URL: ${{ env.DATABASE_URL }}
-        #   RAILS_ENV: ${{ env.RAILS_ENV }}
+        env:
+          DATABASE_URL: ${{ env.DATABASE_URL }}
+          RAILS_ENV: ${{ env.RAILS_ENV }}
         run: |
           cp .env.example .env
           bin/rails db:setup
 
-      - name: Run RSpec
-        # env:
-        #   DATABASE_URL: ${{ env.DATABASE_URL }}
+      - name: Run tests with RSpec
+        env:
+          DATABASE_URL: ${{ env.DATABASE_URL }}
         run: bin/rspec
