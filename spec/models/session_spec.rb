@@ -36,5 +36,7 @@ RSpec.describe Session do
   end
 
   describe '#token' do
+    # TODO: add specs for Session#token
+    pending 'Session#token'
   end
 end
