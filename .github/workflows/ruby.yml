@@ -2,35 +2,71 @@ name: Ruby
 
 on: [push]
 
-jobs:
-  rubocop:
-    runs-on: ubuntu-latest
+env:
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  POSTGRES_HOST: localhost
+  POSTGRES_DB: xpense_tracker_api_test
+  DATABASE_URL: postgresql://postgres:postgres@localhost:5432/xpense_tracker_api
+  RAILS_ENV: test
 
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    name: Install Ruby and gems
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Read .ruby-version
+        id: nvm
+        run: echo ::set-output name=RUBYVERSION::$(cat .ruby-version)
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '${{ steps.nvm.outputs.RUBYVERSION }}'
+
+      - name: Cache bundle
+        uses: actions/cache@v1
+        with:
+          path: .bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: ${{ runner.os }}-gems-
+
+      - name: Install gems
+        run: |
+          gem install bundler
+          bundle config set path .bundle
+          bundle install --jobs 4
+
+  setup_db:
+    runs-on: ubuntu-latest
+    name: Prepare database
+    steps:
+    steps:
+      - name: Migrate database
+        # env:
+        #   DATABASE_URL: ${{ env.DATABASE_URL }}
+        #   RAILS_ENV: ${{ env.RAILS_ENV }}
+        run: |
+          cp .env.example .env
+          bin/rails db:setup
+
+  rubocop:
+    needs: install
+    runs-on: ubuntu-latest
     name: Check code style
 
     steps:
-    - uses: actions/checkout@v2
+      - name: Run rubocop
+        run: bin/rubocop
 
-    - name: Read .ruby-version
-      id: nvm
-      run: echo ::set-output name=RUBYVERSION::$(cat .ruby-version)
+  rspec:
+    needs: install
+    runs-on: ubuntu-latest
+    name: Run tests
 
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: '${{ steps.nvm.outputs.RUBYVERSION }}'
-
-    - name: Cache bundle
-      uses: actions/cache@v1
-      with:
-        path: .bundle
-        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-        restore-keys: ${{ runner.os }}-gems-
-
-    - name: Install gems
-      run: |
-        gem install bundler
-        bundle config set path .bundle
-        bundle install --jobs 4
-
-    - name: Check code
-      run: bin/rubocop
+    steps:
+      - name: Run RSpec
+        # env:
+        #   DATABASE_URL: ${{ env.DATABASE_URL }}
+        run: bin/rspec
