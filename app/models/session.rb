@@ -5,17 +5,18 @@ class Session
   include ActiveModel::Validations
   include ActiveModel::Serialization
 
-  def initialize(session_params)
+  def initialize(session_params, jwt_codec = JwtCodec.new)
     @email = session_params[:email]
     @password = session_params[:password]
+    @jwt_codec = jwt_codec
   end
 
   validates :email, presence: true
   validates :password, presence: true
-  validate :authenticated
+  validate :user_must_be_authenticated
 
   def token
-    JwtCodec.new.encode({ id: user.id })
+    @jwt_codec.encode({ id: user.id })
   end
 
   private
@@ -26,7 +27,7 @@ class Session
     @user ||= User.find_by(email: @email)&.authenticate(@password)
   end
 
-  def authenticated
+  def user_must_be_authenticated
     errors.add :base, :authenticated if user.blank?
   end
 end
