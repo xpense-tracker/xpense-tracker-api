@@ -11,16 +11,25 @@ env:
   RAILS_ENV: test
 
 jobs:
-  install:
+  lint:
     runs-on: ubuntu-latest
-    name: Install Ruby and gems
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+      - name: Install Rubocop
+        run: gem install rubocop
+      - name: Run Rubocop
+        run: rubocop
+
+  test:
+    runs-on: ubuntu-latest
+    name: Run tests with RSpec
     steps:
       - uses: actions/checkout@v2
 
       - name: Read .ruby-version
         id: nvm
         run: echo ::set-output name=RUBYVERSION::$(cat .ruby-version)
-
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '${{ steps.nvm.outputs.RUBYVERSION }}'
@@ -31,19 +40,11 @@ jobs:
           path: .bundle
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: ${{ runner.os }}-gems-
-
       - name: Install gems
         run: |
           gem install bundler
           bundle config set path .bundle
           bundle install --jobs 4
-
-  setup_db:
-    needs: install
-    runs-on: ubuntu-latest
-    name: Prepare database
-    steps:
-      - uses: actions/checkout@v2
 
       - name: Migrate database
         # env:
@@ -53,23 +54,6 @@ jobs:
           cp .env.example .env
           bin/rails db:setup
 
-  rubocop:
-    needs: install
-    runs-on: ubuntu-latest
-    name: Check code style
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Run rubocop
-        run: bin/rubocop
-
-  rspec:
-    needs: setup_db
-    runs-on: ubuntu-latest
-    name: Run tests
-
-    steps:
       - name: Run RSpec
         # env:
         #   DATABASE_URL: ${{ env.DATABASE_URL }}
