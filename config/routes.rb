@@ -2,7 +2,9 @@
 
 Rails.application.routes.draw do
   namespace :api do
-    resources :users
-    resources :sessions
+    namespace :v1 do
+      resources :users
+      resources :sessions
+    end
   end
 end
