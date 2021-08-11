@@ -10,6 +10,8 @@ AllCops:
 
 I18n/RailsI18n:
   Enabled: true
+  Exclude:
+    - spec/rails_helper.rb
 
 I18n/GetText:
   Enabled: false
