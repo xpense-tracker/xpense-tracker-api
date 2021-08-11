@@ -36,17 +36,14 @@ RSpec.describe Session do
   end
 
   describe '#token' do
-    subject(:session) { described_class.new(params, fake_jwt_codec) }
+    subject(:token) { session.token }
 
+    let(:session) { described_class.new(params, fake_jwt_codec) }
     let(:params) { { email: 'user@example.org', password: '123456' } }
     let(:fake_jwt_codec) { instance_double('JwtCodec', encode: 'ey1.2.3') }
 
-    let(:user) { create(:user, params) }
+    before { create(:user, params) }
 
-    it 'finds user' do
-      expect(fake_jwt_codec).to receive(:encode).with({ id: user.id })
-
-      expect(session.token).to eq('ey1.2.3')
-    end
+    it { is_expected.to eq('ey1.2.3') }
   end
 end
