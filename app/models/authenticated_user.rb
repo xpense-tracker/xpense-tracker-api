@@ -14,19 +14,12 @@ class AuthenticatedUser < ApplicationModel
 
   validates :email, presence: true
   validates :password, presence: true
-  validate :user_must_be_authenticated
+  validates_with UserMustBeAuthenticated
 
   def user
     return @user if @called
 
     @called = true
     @user = User.find_by(email: email)&.authenticate(password)
-  end
-
-  def user_must_be_authenticated
-    return if user
-    return if errors.include?(:email) || errors.include?(:password)
-
-    errors.add :base, :not_authenticated
   end
 end
