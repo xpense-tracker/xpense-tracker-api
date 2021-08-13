@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-require 'support/matchers/have_errors_on.rb'
+require 'support/matchers/have_errors_on'
 
-class UserContext < Struct.new(:user, :email, :password, :other_field)
+UserContext = Struct.new(:user, :email, :password, :other_field) do
   include ActiveModel::Validations
 
   validates :email, :password, presence: true
