@@ -6,6 +6,8 @@ Backend for an opensource money tracker.
 
 * Ruby 3.0
 
+* Bunlder ~> 2.2.25
+
 * PostgreSQL
 
 ## Setting up:
