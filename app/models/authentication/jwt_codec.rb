@@ -18,7 +18,7 @@ module Authentication
     def decode(token)
       JWT.decode(token, @secret, true, algorithm: ALGORITHM)[0]
     rescue JWT::DecodeError
-      raise InvalidTokenError, "Cannot decode token with #{ALGORITHM} algorithm"
+      raise InvalidTokenError, I18n.t('errors.authentication.invalid_token')
     end
   end
 end

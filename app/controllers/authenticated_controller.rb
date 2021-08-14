@@ -12,4 +12,13 @@ class AuthenticatedController < ApplicationController
       )
     ).to_model
   end
+
+  rescue_from Authentication::JwtCodec::InvalidTokenError, with: :not_authorized
+  rescue_from Http::BearerTokenFromHeaders::MissingToken, with: :not_authorized
+  rescue_from Http::BearerTokenFromHeaders::UnsupportedType, with: :not_authorized
+
+
+  def not_authorized(error)
+    render json: { error: error }, status: :unauthorized
+  end
 end
