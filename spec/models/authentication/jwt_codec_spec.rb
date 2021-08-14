@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe JwtCodec do
+RSpec.describe Authentication::JwtCodec do
   subject(:jwt_codec) { described_class.new(secret) }
 
   let(:secret) { 'jwt-secret-string' }

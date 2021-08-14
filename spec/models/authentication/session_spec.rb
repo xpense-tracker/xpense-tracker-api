@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Session do
+RSpec.describe Authentication::Session do
   describe '#access_token' do
     subject(:session) { described_class.new(authenticated_user, jwt_codec) }
 

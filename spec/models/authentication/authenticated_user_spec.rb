@@ -4,7 +4,7 @@ require 'rails_helper'
 
 require 'support/factory_bot'
 
-RSpec.describe AuthenticatedUser do
+RSpec.describe Authentication::AuthenticatedUser do
   subject(:authenticated_user) { described_class.new(credentials) }
 
   describe 'validations' do
