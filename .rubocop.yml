@@ -18,7 +18,3 @@ I18n/GetText:
 
 Layout/LineLength:
   Max: 80
-
-Metrics/BlockLength:
-  Exclude:
-    - spec/**/*_spec.rb
