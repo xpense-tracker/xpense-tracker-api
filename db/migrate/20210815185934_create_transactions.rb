@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Creates table for transaction with all required fields
 class CreateTransactions < ActiveRecord::Migration[6.1]
   def change
     create_table :transactions, id: :uuid do |t|
