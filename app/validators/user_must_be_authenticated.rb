@@ -3,9 +3,10 @@
 # Checks for presence of user if there are no errors on email and password
 class UserMustBeAuthenticated < ActiveModel::Validator
   def validate(model)
-    return if model.errors.include?(:email) || model.errors.include?(:password)
+    errors = model.errors
+    return if errors.include?(:email) || errors.include?(:password)
     return if model.user
 
-    model.errors.add :base, :not_authenticated
+    errors.add :base, :not_authenticated
   end
 end

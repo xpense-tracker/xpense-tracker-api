@@ -7,11 +7,13 @@ module Authentication
       super()
       @email = credentials[:email]
       @password = credentials[:password]
+      @called = false
+      @user = nil
     end
 
     delegate :id, to: :user
 
-    attr_accessor :email, :password
+    attr_reader :email, :password
 
     validates :email, presence: true
     validates :password, presence: true

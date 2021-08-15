@@ -13,9 +13,10 @@ module Http
     end
 
     def to_s
-      raise MissingToken unless @headers['Authorization']
+      auth_header = @headers['Authorization']
+      raise MissingToken unless auth_header
 
-      type, token = @headers['Authorization'].split
+      type, token = auth_header.split
       raise UnsupportedType unless type == 'Bearer'
 
       token
