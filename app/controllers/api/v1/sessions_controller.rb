@@ -11,9 +11,9 @@ module Api
         )
 
         if session.valid?
-          render json: session
+          render json: session, root: :session
         else
-          render json: session, status: :unauthorized
+          render json: session, root: :session, status: :unauthorized
         end
       end
 
