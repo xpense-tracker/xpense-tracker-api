@@ -4,6 +4,7 @@ require 'rails_helper'
 
 require 'support/matchers/have_errors_on'
 
+# Class to test UserMustBeAuthenticated validation only
 UserContext = Struct.new(:user, :email, :password, :other_field) do
   include ActiveModel::Validations
 

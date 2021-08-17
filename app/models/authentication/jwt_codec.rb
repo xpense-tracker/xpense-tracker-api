@@ -3,6 +3,7 @@
 module Authentication
   # Encodes/decodes JSON Web Tokens
   class JwtCodec
+    # Happens when failed to decode a token
     class InvalidTokenError < RuntimeError; end
 
     ALGORITHM = 'HS256'

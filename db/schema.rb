@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 2021_08_15_205934) do
     t.uuid "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_categories_on_user_id"
+    t.index ["user_id", "title"], name: "index_categories_on_user_id_and_title", unique: true
   end
 
   create_table "transactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
