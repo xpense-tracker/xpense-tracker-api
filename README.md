@@ -24,4 +24,8 @@ Backend for an opensource money tracker.
 
 Ready to deploy on Heroku.
 
+## Contributors:
+
+@DmitryBarskov @EgorBarakhov
+
 ---
