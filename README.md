@@ -4,9 +4,9 @@ Backend for an opensource money tracker.
 
 ## Dependencies:
 
-* Ruby 3.0
+* Ruby ~> 3.0
 
-* Bunlder ~> 2.2.25
+* Bundler ~> 2.2.25
 
 * PostgreSQL
 
