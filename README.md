@@ -1,33 +1,32 @@
 # README
 
-# TODO:
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Backend for an opensource money tracker.
 
-Things you may want to cover:
+## Dependencies:
 
-* Ruby version
+* Ruby 3.0
 
-* System dependencies
+* Bunlder ~> 2.2.25
 
-* Configuration
+* PostgreSQL
 
-* Database creation
+## Setting up:
 
-* Database initialization
+* See `.env.example` for required environment variables and their description
 
-* How to run the test suite
+* Database creation: `bin/rails db:setup`
 
-* Services (job queues, cache servers, search engines, etc.)
+## Running tests:
 
-* Deployment instructions
+`bin/rspec` will run all the tests
 
-* Created via:
+## Deployment instructions:
 
-```bash
-rails new xpense-tracker-api \
-  -d postgresql \
-  --api --skip-action-text --skip-action-mailbox \
-  --skip-action-cable --skip-sprockets --skip-javascript --skip-turbolinks \
-  --skip-test --skip-bundle --skip-webpack-install
-```
+Ready to deploy on Heroku.
+
+## Contributors:
+
+[@DmitryBarskov](https://github.com/DmitryBarskov)
+[@EgorBarakhov](https://github.com/EgorBarakhov)
+
+---
