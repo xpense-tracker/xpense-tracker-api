@@ -16,6 +16,8 @@ Backend for an opensource money tracker.
 
 * Database creation: `bin/rails db:setup`
 
+* Setting everything up in one command: `bin/setup`
+
 ## Running tests:
 
 `bin/rspec` will run all the tests
