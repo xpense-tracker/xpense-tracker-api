@@ -26,6 +26,7 @@ Ready to deploy on Heroku.
 
 ## Contributors:
 
-@DmitryBarskov @EgorBarakhov
+[@DmitryBarskov](github.com/DmitryBarskov)
+[@EgorBarakhov](github.com/EgorBarakhov)
 
 ---
