@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :sessions, only: %i[create]
+      resources :transactions
       resource :users, only: %i[show create update]
     end
   end
