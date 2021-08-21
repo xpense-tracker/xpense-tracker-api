@@ -4,6 +4,8 @@ module Api
   module V1
     # Manages users
     class UsersController < AuthenticatedController
+      skip_before_action :authorize_user!, only: :create
+
       def show
         render json: current_user
       end
