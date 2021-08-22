@@ -20,14 +20,12 @@ RSpec.describe AuthenticatedUser do
       end
     end
 
-    context 'when wrong email and password present' do
+    context 'with wrong email' do
       let(:credentials) { { email: 'user@example.org', password: '1234' } }
 
-      it 'adds only password errors' do
-        authenticated_user.validate
-
-        expect(authenticated_user.errors.messages).to eq(
-          base: ['Wrong email or password']
+      it 'raises an error' do
+        expect { authenticated_user.validate }.to(
+          raise_error(ActiveRecord::RecordNotFound)
         )
       end
     end
