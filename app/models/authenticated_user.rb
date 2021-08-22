@@ -16,10 +16,8 @@ class AuthenticatedUser < ApplicationModel
   validates :password, presence: true
   validates_with UserMustBeAuthenticated
 
-  def user
-    return @user if @called
-
-    @called = true
-    @user = User.find_by(email: email)&.authenticate(password)
+  def to_model
+    @to_model ||= User.find_by!(email: email).authenticate(password)
   end
+  alias user to_model
 end

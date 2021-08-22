@@ -8,9 +8,13 @@ class Session < ApplicationModel
     @jwt_codec = jwt_codec
   end
 
-  delegate :valid?, :invalid?, :validate, :errors, to: :@user
+  delegate :valid?, :invalid?, :validate, :errors, to: :user
 
   def access_token
     @jwt_codec.encode({ id: @user.id })
   end
+
+  private
+
+  attr_reader :user
 end
