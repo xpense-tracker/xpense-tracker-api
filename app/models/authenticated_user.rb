@@ -8,9 +8,9 @@ class AuthenticatedUser < ApplicationModel
     @password = credentials[:password]
   end
 
-  attr_reader :email, :password
-
   delegate :id, to: :user
+
+  attr_reader :email, :password
 
   validates :email, presence: true
   validates :password, presence: true
