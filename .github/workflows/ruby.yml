@@ -34,11 +34,11 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Read .ruby-version
-        id: rbver
+        id: rubyversion
         run: echo ::set-output name=RUBYVERSION::$(cat .ruby-version)
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '${{ steps.rbver.outputs.RUBYVERSION }}'
+          ruby-version: '${{ steps.rubyversion.outputs.RUBYVERSION }}'
 
       - name: Cache bundle
         uses: actions/cache@v1
