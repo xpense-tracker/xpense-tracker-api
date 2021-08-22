@@ -18,6 +18,8 @@ class AuthenticatedController < ApplicationController
   rescue_from Http::BearerTokenFromHeaders::UnsupportedType,
               with: :not_authorized
 
+  private
+
   def not_authorized(error)
     render json: { error: error }, status: :unauthorized
   end
