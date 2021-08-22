@@ -12,7 +12,7 @@ module Authentication
     delegate :valid?, :invalid?, :validate, :errors, to: :@user
 
     def access_token
-      @jwt_codec.encode({ id: @user.id })
+      @jwt_codec.encode(id: @user.id)
     end
   end
 end
