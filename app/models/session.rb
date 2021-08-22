@@ -16,11 +16,5 @@ class Session < ApplicationModel
 
   private
 
-  def user
-    @user ||= User.find_by(email: @email)&.authenticate(@password)
-  end
-
-  def user_must_be_authenticated
-    errors.add :base, :authenticated if user.blank?
-  end
+  attr_reader :user
 end

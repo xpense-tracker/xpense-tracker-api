@@ -19,4 +19,5 @@ class AuthenticatedUser < ApplicationModel
   def to_model
     @to_model ||= User.find_by!(email: email).authenticate(password)
   end
+  alias user to_model
 end

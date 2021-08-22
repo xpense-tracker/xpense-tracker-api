@@ -30,3 +30,5 @@
 spec/examples.txt
 
 .env
+
+/coverage
