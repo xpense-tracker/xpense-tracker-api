@@ -3,14 +3,14 @@
 # Authenticates a user and provides their ID
 class AuthenticatedUser < ApplicationModel
   def initialize(credentials)
-    super
+    super()
     @email = credentials[:email]
     @password = credentials[:password]
   end
 
   delegate :id, to: :user
 
-  attr_accessor :email, :password
+  attr_reader :email, :password
 
   validates :email, presence: true
   validates :password, presence: true
