@@ -7,7 +7,6 @@ module Authentication
       super()
       @email = credentials[:email]
       @password = credentials[:password]
-      @called = false
       @user = nil
     end
 
@@ -19,12 +18,9 @@ module Authentication
     validates :password, presence: true
     validates_with UserMustBeAuthenticated
 
-    def user
-      return @user if @called
-
-      @called = true
-      @user = User.find_by(email: email)&.authenticate(password)
+    def to_model
+      @to_model ||= User.find_by!(email: email).authenticate(password)
     end
-    alias to_model user
+    alias user to_model
   end
 end

@@ -5,13 +5,13 @@ require 'rails_helper'
 require 'support/factory_bot'
 
 RSpec.describe Authentication::AuthenticatedUser do
-  subject(:authenticated_user) do
-    described_class.new(credentials).tap(&:validate)
-  end
+  subject(:authenticated_user) { described_class.new(credentials) }
 
   describe 'validations' do
     context 'when password is missing' do
       let(:credentials) { { email: 'user@example.org' } }
+
+      before { authenticated_user.validate }
 
       it 'adds only password errors' do
         expect(authenticated_user.errors.messages).to eq(
@@ -20,12 +20,12 @@ RSpec.describe Authentication::AuthenticatedUser do
       end
     end
 
-    context 'when wrong email and password present' do
-      let(:credentials) { { email: 'user@example.org', password: '1234' } }
+    context 'when there is no user with such email' do
+      let(:credentials) { { email: 'nouser@example.org', password: '1234' } }
 
       it 'adds only password errors' do
-        expect(authenticated_user.errors.messages).to eq(
-          base: ['Wrong email or password']
+        expect { authenticated_user.validate }.to raise_error(
+          ActiveRecord::RecordNotFound
         )
       end
     end

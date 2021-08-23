@@ -22,7 +22,7 @@ RSpec.describe Authentication::JwtCodec do
   end
 
   describe '#decode' do
-    let(:token) { 'ey1.2.3' }
+    let(:token) { 'x.y.z' }
 
     before do
       allow(JWT).to receive(:decode).and_return([])
