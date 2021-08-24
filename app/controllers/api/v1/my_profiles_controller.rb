@@ -3,7 +3,7 @@
 module Api
   module V1
     # Manage current user's account
-    class MyProfilesController < AuthenticatedController
+    class MyProfilesController < ControllerWithAuthentication
       def show
         render json: current_user
       end

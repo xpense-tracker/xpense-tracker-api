@@ -2,7 +2,7 @@
 
 # Provides authentication to derived controllers.
 # User is exposed via current_user method.
-class AuthenticatedController < ApplicationController
+class ControllerWithAuthentication < ApplicationController
   rescue_from(
     Authentication::JwtCodec::InvalidTokenError,
     Http::BearerTokenFromHeaders::MissingToken,
