@@ -9,7 +9,7 @@ module Authentication
     end
 
     def to_model
-      User.find(@id.to_s)
+      User.find_by!(id: @id.to_s)
     end
   end
 end
