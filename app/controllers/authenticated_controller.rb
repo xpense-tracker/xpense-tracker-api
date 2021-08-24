@@ -3,6 +3,13 @@
 # Provides authentication to derived controllers.
 # User is exposed via current_user method.
 class AuthenticatedController < ApplicationController
+  rescue_from(
+    Authentication::JwtCodec::InvalidTokenError,
+    Http::BearerTokenFromHeaders::MissingToken,
+    Http::BearerTokenFromHeaders::UnsupportedType,
+    with: :unauthenticated
+  )
+
   def current_user
     @current_user ||= Authentication::UserById.new(
       Authentication::IdFromJwt.new(
@@ -13,14 +20,9 @@ class AuthenticatedController < ApplicationController
     ).to_model
   end
 
-  rescue_from Authentication::JwtCodec::InvalidTokenError, with: :not_authorized
-  rescue_from Http::BearerTokenFromHeaders::MissingToken, with: :not_authorized
-  rescue_from Http::BearerTokenFromHeaders::UnsupportedType,
-              with: :not_authorized
-
   private
 
-  def not_authorized(error)
-    render json: { error: error }, status: :unauthorized
+  def unauthenticated(error)
+    render json: { error: error.message }, status: :unauthorized
   end
 end

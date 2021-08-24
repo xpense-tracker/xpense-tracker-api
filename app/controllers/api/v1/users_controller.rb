@@ -3,11 +3,7 @@
 module Api
   module V1
     # Manages users
-    class UsersController < AuthenticatedController
-      def show
-        render json: current_user
-      end
-
+    class UsersController < ApplicationController
       def create
         user = User.new(user_params)
 
