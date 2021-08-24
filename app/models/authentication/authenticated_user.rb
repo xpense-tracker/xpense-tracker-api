@@ -7,7 +7,7 @@ module Authentication
       super()
       @email = credentials[:email]
       @password = credentials[:password]
-      @user = nil
+      @to_model = nil
     end
 
     delegate :id, to: :user
@@ -19,7 +19,8 @@ module Authentication
     validates_with UserMustBeAuthenticated
 
     def to_model
-      @to_model ||= User.find_by!(email: email).authenticate(password)
+      @to_model ||= User.find_by(email: email)&.authenticate(password) ||
+                    Authentication::NullUser.new
     end
     alias user to_model
   end

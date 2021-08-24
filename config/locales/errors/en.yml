@@ -1,4 +1,4 @@
 en:
   errors:
     authentication:
-      invalid_token: Cannot decode given token
+      invalid_token: invalid authentication token

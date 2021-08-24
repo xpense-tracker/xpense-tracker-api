@@ -5,4 +5,4 @@ en:
         authentication/authenticated_user:
           attributes:
             base:
-              not_authenticated: Wrong email or password
+              not_authenticated: wrong email or password
