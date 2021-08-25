@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Provides current user and authorization headers to all request methods
+# Provides current user and Authorization header to all request methods
 RSpec.shared_context 'when user signed in' do
   let(:current_user) { create(:user) }
   let(:jwt) do
@@ -9,11 +9,21 @@ RSpec.shared_context 'when user signed in' do
     ).access_token
   end
 
+  # Defines all request methods and adds Authorization header to params
+  #
+  # def patch(*args, **kwargs)
+  #   super(
+  #     *args,
+  #     **kwargs.deep_merge(headers: { 'Authorization' => "Bearer #{jwt}" }),
+  #     &block
+  #   )
+  # end
   %i[get post patch put head delete].each do |method_name|
-    define_method(method_name) do |path, *args, **kwargs|
+    define_method(method_name) do |*args, **kwargs, &block|
       super(
-        path, *args,
-        **kwargs.deep_merge(headers: { 'Authorization' => "Bearer #{jwt}" })
+        *args,
+        **kwargs.deep_merge(headers: { 'Authorization' => "Bearer #{jwt}" }),
+        &block
       )
     end
   end
