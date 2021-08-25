@@ -37,12 +37,12 @@ RSpec.describe 'Api::V1::MyProfile' do
   end
 
   describe 'PATCH /api/v1/my_profile' do
-    include_context 'when user signed in'
-
     subject(:http_response) do
       patch api_v1_my_profile_path, params: { user: profile_data }
       response
     end
+
+    include_context 'when user signed in'
 
     context 'with valid data' do
       let(:profile_data) { { email: 'bob@example.org', name: 'Sponge Bob' } }

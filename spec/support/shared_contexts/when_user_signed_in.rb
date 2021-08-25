@@ -9,7 +9,7 @@ RSpec.shared_context 'when user signed in' do
     ).access_token
   end
 
-  %i(get post patch put head delete).each do |method_name|
+  %i[get post patch put head delete].each do |method_name|
     define_method(method_name) do |path, *args, **kwargs|
       super(
         path, *args,
