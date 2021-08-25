@@ -5,7 +5,7 @@ require 'support/factory_bot'
 require 'support/matchers/have_json_body'
 
 RSpec.describe 'Api::V1::MyProfile' do
-  describe 'POST /api/v1/my_profile' do
+  describe 'GET /api/v1/my_profile' do
     subject(:http_response) do
       get api_v1_my_profile_path, headers: {
         'Authorization' => "Bearer #{jwt}"
