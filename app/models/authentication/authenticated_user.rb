@@ -7,8 +7,7 @@ module Authentication
       super()
       @email = credentials[:email]
       @password = credentials[:password]
-      @called = false
-      @user = nil
+      @to_model = nil
     end
 
     delegate :id, to: :user
@@ -19,12 +18,11 @@ module Authentication
     validates :password, presence: true
     validates_with UserMustBeAuthenticated
 
-    def user
-      return @user if @called
-
-      @called = true
-      @user = User.find_by(email: email)&.authenticate(password)
+    def to_model
+      @to_model ||= User.find_by!(email: email).authenticate(password)
+    rescue ActiveRecrod::RecordNotFound
+      @to_model = Authentication::NullUser.new
     end
-    alias to_model user
+    alias user to_model
   end
 end

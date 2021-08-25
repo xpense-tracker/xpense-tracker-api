@@ -14,10 +14,14 @@ module Http
 
     def to_s
       auth_header = @headers['Authorization']
-      raise MissingToken unless auth_header
+
+      raise MissingToken, I18n.t('errors.http.missing_token') unless auth_header
 
       type, token = auth_header.split
-      raise UnsupportedType unless type == 'Bearer'
+
+      unless type == 'Bearer'
+        raise UnsupportedType, I18n.t('errors.http.unsupported_token_type')
+      end
 
       token
     end
