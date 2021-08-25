@@ -27,8 +27,7 @@ RSpec.describe 'Api::V1::MyProfile' do
       it { is_expected.to have_json_body(user: profile_data) }
     end
 
-    # TODO: Enable this test
-    xcontext 'with invalid authorization header' do
+    context 'with invalid authorization header' do
       let(:jwt) { 'x.y.z' }
 
       it { is_expected.to have_http_status(:unauthorized) }

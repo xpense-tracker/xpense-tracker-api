@@ -23,6 +23,8 @@ class ControllerWithAuthentication < ApplicationController
   private
 
   def unauthenticated(error)
-    render json: { error: error.message }, status: :unauthorized
+    render json: { error: error.message },
+           status: :unauthorized,
+           scope: nil
   end
 end
