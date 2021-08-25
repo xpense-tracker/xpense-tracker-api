@@ -20,7 +20,7 @@ module Authentication
 
     def to_model
       @to_model ||= User.find_by!(email: email).authenticate(password)
-    rescue ActiveRecrod::RecordNotFound
+    rescue ActiveRecord::RecordNotFound
       @to_model = Authentication::NullUser.new
     end
     alias user to_model
