@@ -11,6 +11,7 @@ RSpec.shared_context 'when user signed in' do
 
   # Defines all request methods and adds Authorization header to params
   #
+  # An example:
   # def patch(*args, **kwargs)
   #   super(
   #     *args,
