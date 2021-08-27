@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
-require 'simplecov'
+unless ENV['CI']
+  require 'simplecov'
 
-SimpleCov.start 'rails' do
-  enable_coverage :branch
-  primary_coverage :branch
+  SimpleCov.start 'rails' do
+    enable_coverage :branch
+    primary_coverage :branch
+  end
 end

@@ -2,12 +2,16 @@
 
 require 'rails_helper'
 
-RSpec.describe Session do
+RSpec.describe Authentication::Session do
   describe '#access_token' do
     subject(:session) { described_class.new(authenticated_user, jwt_codec) }
 
-    let(:authenticated_user) { instance_double('AuthenticatedUser', id: 42) }
-    let(:jwt_codec) { instance_double('JwtCodec', encode: 'ey1.2.3') }
+    let(:authenticated_user) do
+      instance_double('Authentication::AuthenticatedUser', id: 42)
+    end
+    let(:jwt_codec) do
+      instance_double('Authentication::JwtCodec', encode: 'x.y.z')
+    end
 
     it 'encodes user data using given codec' do
       session.access_token
