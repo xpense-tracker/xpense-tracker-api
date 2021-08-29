@@ -2,7 +2,11 @@
 
 module Api
   module V1
-    class TransactionsController < ApplicationController
+    # Current user's transactions
+    class TransactionsController < ControllerWithAuthentication
+      def index
+        render json: { transactions: current_user.transactions }
+      end
     end
   end
 end
