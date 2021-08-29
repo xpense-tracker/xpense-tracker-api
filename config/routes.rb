@@ -5,7 +5,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :sessions, only: %i[create]
       resources :transactions
-      resource :users, only: %i[show create update]
+      resources :users, only: %i[create]
+      resource :my_profile, only: %i[show update]
     end
   end
 end
