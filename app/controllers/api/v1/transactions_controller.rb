@@ -7,6 +7,10 @@ module Api
       def index
         render json: { transactions: current_user.transactions }
       end
+
+      def create
+        render json: {}
+      end
     end
   end
 end
