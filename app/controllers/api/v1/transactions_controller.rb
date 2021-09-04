@@ -22,6 +22,10 @@ module Api
         end
       end
 
+      def destroy
+
+      end
+
       private
 
       def transaction_params
