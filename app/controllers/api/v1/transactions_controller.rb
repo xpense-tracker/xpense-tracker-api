@@ -23,7 +23,9 @@ module Api
       end
 
       def destroy
-
+        transaction = Transaction.find(params[:id])
+        transaction.destroy!
+        head :no_content
       end
 
       private
