@@ -28,3 +28,7 @@
 
 # RSpec cache
 spec/examples.txt
+
+.env
+
+/coverage

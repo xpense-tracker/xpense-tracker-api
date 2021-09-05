@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Serializes Authentication::Session
 class SessionSerializer < ApplicationSerializer
-  attribute :token, if: -> { object.valid? }
+  attribute :access_token, if: -> { object.valid? }
 end

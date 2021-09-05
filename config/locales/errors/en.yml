@@ -1,0 +1,7 @@
+en:
+  errors:
+    authentication:
+      invalid_token: invalid authentication token
+    http:
+      missing_token: missing authentication token
+      unsupported_token_type: unsupported token type

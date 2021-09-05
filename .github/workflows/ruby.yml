@@ -2,35 +2,66 @@ name: Ruby
 
 on: [push]
 
-jobs:
-  rubocop:
-    runs-on: ubuntu-latest
+env:
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  POSTGRES_HOST: localhost
+  POSTGRES_DB: xpense_tracker_api_test
+  DATABASE_URL: postgresql://postgres:postgres@localhost:5432/xpense_tracker_api
+  RAILS_ENV: test
 
-    name: Check code style
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    name: CI
+
+    services:
+      db:
+        image: postgres
+        ports: ['5432:5432']
+        env:
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          POSTGRES_HOST: ${{ env.POSTGRES_HOST }}
+          POSTGRES_DB: ${{ env.POSTGRES_DB }}
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Read .ruby-version
-      id: nvm
-      run: echo ::set-output name=RUBYVERSION::$(cat .ruby-version)
+      - name: Read .ruby-version
+        id: rubyversion
+        run: echo ::set-output name=RUBYVERSION::$(cat .ruby-version)
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '${{ steps.rubyversion.outputs.RUBYVERSION }}'
 
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: '${{ steps.nvm.outputs.RUBYVERSION }}'
+      - name: Cache bundle
+        uses: actions/cache@v1
+        with:
+          path: .bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: ${{ runner.os }}-gems-
+      - name: Install gems
+        run: |
+          gem install bundler
+          bundle config set path .bundle
+          bundle install --jobs 4
 
-    - name: Cache bundle
-      uses: actions/cache@v1
-      with:
-        path: .bundle
-        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-        restore-keys: ${{ runner.os }}-gems-
+      - name: Run Rubocop
+        run: bin/rubocop
 
-    - name: Install gems
-      run: |
-        gem install bundler
-        bundle config set path .bundle
-        bundle install --jobs 4
+      - name: Setup everything else
+        env:
+          DATABASE_URL: ${{ env.DATABASE_URL }}
+          RAILS_ENV: ${{ env.RAILS_ENV }}
+        run: bin/setup
 
-    - name: Check code
-      run: bin/rubocop
+      - name: Run tests with RSpec
+        env:
+          DATABASE_URL: ${{ env.DATABASE_URL }}
+        run: bin/rspec

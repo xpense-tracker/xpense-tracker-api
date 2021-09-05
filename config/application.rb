@@ -41,7 +41,10 @@ module XpenseTrackerApi
     config.api_only = true
 
     config.i18n.load_path += Dir[
-      Rails.root.join('config/locales/activemodel/**/*.yml')
+      Rails.root.join('config/locales/activemodel/**/*.yml'),
+      Rails.root.join('config/locales/errors/**/*.yml'),
     ]
+
+    config.autoload_paths << Rails.root.join('app/validators')
   end
 end
