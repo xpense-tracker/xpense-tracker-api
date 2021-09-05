@@ -3,8 +3,10 @@
 module Http
   # Extracts authentication token from Authorization HTTP header.
   class BearerTokenFromHeaders < ApplicationModel
+    # Happens when no token provided
     class MissingToken < RuntimeError; end
 
+    # Happens when type of token is not Bearer
     class UnsupportedType < RuntimeError; end
 
     def initialize(headers)
@@ -14,7 +16,6 @@ module Http
 
     def to_s
       auth_header = @headers['Authorization']
-
       raise MissingToken, I18n.t('errors.http.missing_token') unless auth_header
 
       type, token = auth_header.split

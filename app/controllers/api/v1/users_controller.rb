@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    # Manages users
+    # Register users
     class UsersController < ApplicationController
       def create
         user = User.new(user_params)
