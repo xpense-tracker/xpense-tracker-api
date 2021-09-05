@@ -2,7 +2,7 @@
 
 # Represents a human account in the app
 class User < ApplicationRecord
-  validates :email, presence: true, uniqueness: { case_sensitive: false }
+  validates :email, presence: true, uniqueness: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
   has_secure_password
 
