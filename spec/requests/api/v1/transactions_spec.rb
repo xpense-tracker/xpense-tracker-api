@@ -37,4 +37,37 @@ RSpec.describe 'Api::V1::Transactions' do
       )
     end
   end
+
+  describe 'POST /api/v1/transactions' do
+    subject(:http_response) do
+      post api_v1_transactions_path, params: { transaction: params }
+      response
+    end
+
+    include_context 'when user signed in'
+
+    context 'with valid data' do
+      let(:params) do
+        {
+          amount_cents: 1_00,
+          amount_currency: 'USD',
+          category_id: category.id
+        }
+      end
+      let(:expected_response) do
+        {
+          transaction: {
+            amount: {
+              cents: 1_00,
+              currency_iso: 'USD'
+            }
+          }
+        }
+      end
+      let!(:category) { create(:category) }
+
+      it { is_expected.to have_http_status(:created) }
+      it { is_expected.to have_json_body(expected_response) }
+    end
+  end
 end
