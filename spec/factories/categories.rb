@@ -2,9 +2,9 @@
 
 FactoryBot.define do
   factory :category do
-    title { 'MyString' }
-    description { 'MyText' }
-    icon_url { 'MyString' }
+    sequence(:title) { |n| "Category #{n}" }
+    description { Faker::Lorem.sentence }
+    icon_url { 'https://fonts.gstatic.com/s/i/materialicons/info/v18/24px.svg' }
     user { nil }
 
     trait :private do
