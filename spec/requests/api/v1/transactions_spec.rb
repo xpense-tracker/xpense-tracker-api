@@ -25,7 +25,7 @@ RSpec.describe 'Api::V1::Transactions' do
     it { is_expected.to have_http_status(:ok) }
     it { is_expected.to have_json_body(transactions: with_size(1)) }
 
-    it "includes current users' transaction" do
+    it "includes current user's transaction" do
       expect(http_response).to have_json_body(
         transactions: have_item_with(amount_cents: 1_00)
       )
