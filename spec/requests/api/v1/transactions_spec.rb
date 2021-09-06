@@ -9,7 +9,7 @@ require 'support/matchers/with_size'
 require 'support/shared_contexts/when_user_signed_in'
 
 RSpec.describe 'Api::V1::Transactions' do
-  describe 'GET /index' do
+  describe 'GET /api/v1/transactions' do
     subject(:http_response) do
       get api_v1_transactions_path
       response
@@ -25,7 +25,7 @@ RSpec.describe 'Api::V1::Transactions' do
     it { is_expected.to have_http_status(:ok) }
     it { is_expected.to have_json_body(transactions: with_size(1)) }
 
-    it "includes current users' transaction" do
+    it "includes current user's transaction" do
       expect(http_response).to have_json_body(
         transactions: have_item_with(amount_cents: 1_00)
       )
