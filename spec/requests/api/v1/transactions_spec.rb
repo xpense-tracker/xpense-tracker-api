@@ -38,7 +38,7 @@ RSpec.describe 'Api::V1::Transactions' do
     end
   end
 
-  describe 'POST /index' do
+  describe 'POST /api/v1/transactions' do
     subject(:http_response) do
       post api_v1_transactions_path, params: { transaction: params }
       response
