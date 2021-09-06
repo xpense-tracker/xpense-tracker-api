@@ -70,4 +70,17 @@ RSpec.describe 'Api::V1::Transactions' do
       it { is_expected.to have_json_body(expected_response) }
     end
   end
+
+  describe 'DELETE /api/v1/transactions/:id' do
+    subject(:http_response) do
+      delete api_v1_transaction_path(transaction)
+      response
+    end
+
+    include_context 'when user signed in'
+
+    let(:transaction) { create(:transaction, user: current_user) }
+
+    it { is_expected.to have_http_status(:no_content) }
+  end
 end
