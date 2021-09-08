@@ -15,12 +15,7 @@ RSpec.describe 'Api::V1::MyProfile' do
     end
 
     context 'with valid authorization' do
-      let(:jwt) do
-        Authentication::Session.new(
-          current_user,
-          Authentication::JwtCodec.new
-        ).access_token
-      end
+      let(:jwt) { Authentication::JwtFromUser.new(current_user) }
       let(:current_user) { create(:user, profile_data) }
       let(:profile_data) { { email: 'bob@example.org', name: 'Sponge Bob' } }
 
