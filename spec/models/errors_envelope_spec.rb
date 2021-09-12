@@ -8,7 +8,7 @@ require 'support/matchers/have_errors_on'
 RSpec.describe ErrorsEnvelope do
   subject(:decorated) { described_class.new(model) }
 
-  context 'with model with errors' do
+  context 'with invalid model' do
     let(:model) { build(:user, email: nil) }
 
     it { is_expected.to be_invalid }
@@ -20,7 +20,7 @@ RSpec.describe ErrorsEnvelope do
     end
   end
 
-  context 'with model without errors' do
+  context 'with valid model' do
     let(:model) { build(:category) }
 
     it { is_expected.to be_valid }
