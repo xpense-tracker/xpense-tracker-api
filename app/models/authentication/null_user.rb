@@ -6,9 +6,5 @@ module Authentication
     def present?
       false
     end
-
-    def id
-      raise ActiveRecord::RecordNotFound
-    end
   end
 end

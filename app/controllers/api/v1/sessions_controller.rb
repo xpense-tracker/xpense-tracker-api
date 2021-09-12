@@ -6,8 +6,9 @@ module Api
     class SessionsController < ApplicationController
       def create
         session = Authentication::Session.new(
-          Authentication::AuthenticatedUser.new(credentials),
-          Authentication::JwtCodec.new
+          Authentication::JwtFromUser.new(
+            Authentication::AuthenticatedUser.new(credentials)
+          )
         )
 
         if session.valid?

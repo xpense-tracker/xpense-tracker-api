@@ -3,11 +3,7 @@
 # Provides current user and Authorization header to all request methods
 RSpec.shared_context 'when user signed in' do
   let(:current_user) { create(:user) }
-  let(:jwt) do
-    Authentication::Session.new(
-      current_user, Authentication::JwtCodec.new
-    ).access_token
-  end
+  let(:jwt) { Authentication::JwtFromUser.new(current_user) }
 
   # Defines all request methods and adds Authorization header to params
   #

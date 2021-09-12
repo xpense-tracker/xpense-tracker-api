@@ -2,17 +2,14 @@
 
 module Authentication
   # Contains a token to identify a user
-  class Session < ApplicationModel
-    def initialize(user, jwt_codec)
-      super()
-      @user = user
-      @jwt_codec = jwt_codec
+  class Session < ErrorsEnvelope
+    def initialize(access_token)
+      super(access_token)
+      @access_token = access_token
     end
 
-    delegate :valid?, :invalid?, :validate, :errors, to: :@user
-
     def access_token
-      @jwt_codec.encode(id: @user.id)
+      @access_token.to_s
     end
   end
 end
