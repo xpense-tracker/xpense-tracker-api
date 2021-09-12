@@ -5,7 +5,7 @@ module Api
     # Manage current user's account
     class MyProfilesController < ControllerWithAuthentication
       def show
-        render json: current_user, location: api_v1_my_profile_path
+        render json: current_user
       end
 
       def update
