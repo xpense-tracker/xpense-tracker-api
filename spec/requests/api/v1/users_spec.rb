@@ -11,24 +11,26 @@ RSpec.describe 'Api::V1::Users' do
       response
     end
 
-    context 'with valid data' do
-      let(:user_params) do
-        { email: 'user@example.org', password: '123456', name: 'Barney' }
-      end
+    let(:user_params) do
+      { email: email, password: '123456', name: name }.compact
+    end
+    let(:email) { 'user@example.org' }
+    let(:name) { 'Barney' }
 
+    context 'with valid data' do
       it { is_expected.to have_http_status(:created) }
       it { is_expected.to have_json_body(user: user_params.except(:password)) }
     end
 
     context 'with invalid email' do
-      let(:user_params) { { email: 'asdf', password: '123456' } }
+      let(:email) { 'asdf' }
 
       it { is_expected.to have_http_status(:unprocessable_entity) }
       it { is_expected.to have_json_body(user: have_key(:errors)) }
     end
 
     context 'without name' do
-      let(:user_params) { { email: 'user@example.org', password: '123456' } }
+      let(:name) { nil }
 
       it { is_expected.to have_http_status(:created) }
       it { is_expected.to have_json_body(user: have_key(:email)) }
