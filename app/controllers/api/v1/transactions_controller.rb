@@ -8,6 +8,15 @@ module Api
         render json: { transactions: current_user.transactions }
       end
 
+      def show
+        transaction = Transaction.find(params[:id])
+        render(
+          json: transaction,
+          serializer: DetailedTransactionSerializer,
+          location: api_v1_transaction_path(transaction)
+        )
+      end
+
       def create
         transaction = Transaction.new(transaction_params)
 

@@ -38,6 +38,35 @@ RSpec.describe 'Api::V1::Transactions' do
     end
   end
 
+  describe 'GET /api/v1/transactions/:id' do
+    subject(:http_response) do
+      get api_v1_transaction_path(transaction)
+      response
+    end
+
+    include_context 'when user signed in'
+
+    let(:transaction) { create(:transaction, category: category) }
+    let(:category) { create(:category, title: 'Food', description: '') }
+    let(:expected_transaction_data) do
+      {
+        amount: { cents: 1_00, currency_iso: 'USD' },
+        category: expected_category_data
+      }
+    end
+    let(:expected_category_data) do
+      { title: 'Food', description: '', icon_url: be_a(String) }
+    end
+
+    it { is_expected.to have_http_status(:ok) }
+
+    it 'responds with transaction and category data' do
+      expect(http_response).to have_json_body(
+        transaction: expected_transaction_data
+      )
+    end
+  end
+
   describe 'POST /api/v1/transactions' do
     subject(:http_response) do
       post api_v1_transactions_path, params: { transaction: params }
