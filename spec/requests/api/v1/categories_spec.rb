@@ -13,6 +13,13 @@ RSpec.describe 'Api::V1::Categories' do
       response
     end
 
+    let(:expected_response) do
+      [
+        include(title: 'Public category'),
+        include(title: 'Custom category')
+      ]
+    end
+
     before do
       create(:category, title: 'Public category')
       create(:category, :private, title: 'Custom category', user: current_user)
@@ -22,6 +29,6 @@ RSpec.describe 'Api::V1::Categories' do
     include_context 'when user signed in'
 
     it { is_expected.to have_http_status(:ok) }
-    it { is_expected.to have_json_body(categories: be_an(Array)) }
+    it { is_expected.to have_json_body(categories: expected_response) }
   end
 end
