@@ -5,6 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '~> 3.0.0'
 
+gem 'action_policy', '~> 0.6.0'
 gem 'active_model_serializers', '~> 0.10.12'
 gem 'bcrypt', '~> 3.1.7'
 gem 'jwt'
