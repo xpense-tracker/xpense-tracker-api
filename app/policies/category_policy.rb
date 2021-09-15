@@ -2,16 +2,9 @@
 
 # Authorization for Category
 class CategoryPolicy < ApplicationPolicy
-  # See https://actionpolicy.evilmartians.io/#/writing_policies
-  #
-  # def index?
-  #   true
-  # end
-  #
-  # def update?
-  #   # here we can access our context and record
-  #   user.admin? || (user.id == record.user_id)
-  # end
+  def index?
+    true
+  end
 
   relation_scope do |relation|
     relation.where(user: [user, nil])

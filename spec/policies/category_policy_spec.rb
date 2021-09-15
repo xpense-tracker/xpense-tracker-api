@@ -2,13 +2,14 @@
 
 require 'rails_helper'
 require 'action_policy/rspec/dsl'
+require 'support/factory_bot'
 
 RSpec.describe CategoryPolicy do
   let(:user) { build(:user) }
   let(:context) { { user: user } }
 
   describe_rule :index? do
-    pending "add some examples to (or delete) #{__FILE__}"
+    succeed
   end
 
   describe_rule :create? do
