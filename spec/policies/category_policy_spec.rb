@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'action_policy/rspec/dsl'
 
-RSpec.describe CategoryPolicy, type: :policy do
-  # See https://actionpolicy.evilmartians.io/#/testing?id=rspec-dsl
-  #
-  # let(:user) { build_stubbed :user }
-  # let(:record) { build_stubbed :post, draft: false }
-  # let(:context) { {user: user} }
+RSpec.describe CategoryPolicy do
+  let(:user) { build(:user) }
+  let(:context) { { user: user } }
 
   describe_rule :index? do
     pending "add some examples to (or delete) #{__FILE__}"
