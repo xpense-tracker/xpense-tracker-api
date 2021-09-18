@@ -31,6 +31,19 @@ module Api
         end
       end
 
+      def update
+        transaction = Transaction.find(params[:id])
+
+        if transaction.update(transaction_params)
+          render(
+            json: transaction,
+            location: api_v1_transaction_path(transaction)
+          )
+        else
+          render json: transaction, status: :unprocessable_entity
+        end
+      end
+
       def destroy
         transaction = Transaction.find(params[:id])
         transaction.destroy!

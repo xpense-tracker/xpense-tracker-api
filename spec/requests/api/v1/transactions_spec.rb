@@ -91,6 +91,26 @@ RSpec.describe 'Api::V1::Transactions' do
     end
   end
 
+  describe 'PATCH /api/v1/transactions' do
+    subject(:http_response) do
+      patch api_v1_transaction_path(transaction), params: {
+        transaction: params
+      }
+      response
+    end
+
+    include_context 'when user signed in'
+
+    let(:transaction) { create(:transaction) }
+    let(:params) { { amount_cents: 3_00 } }
+    let(:expected_body) do
+      { amount: { cents: 3_00, currency_iso: 'USD' } }
+    end
+
+    it { is_expected.to have_http_status(:ok) }
+    it { is_expected.to have_json_body(transaction: include(expected_body)) }
+  end
+
   describe 'DELETE /api/v1/transactions/:id' do
     subject(:http_response) do
       delete api_v1_transaction_path(transaction)
