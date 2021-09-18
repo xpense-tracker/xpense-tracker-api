@@ -11,9 +11,7 @@ RSpec.describe 'Api::V1::Users' do
       response
     end
 
-    let(:user_params) do
-      { email: email, password: '123456', name: name }.compact
-    end
+    let(:user_params) { { email: email, password: '123456', name: name } }
     let(:email) { 'user@example.org' }
     let(:name) { 'Barney' }
 
