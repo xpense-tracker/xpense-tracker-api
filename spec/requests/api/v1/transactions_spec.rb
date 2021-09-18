@@ -3,9 +3,7 @@
 require 'rails_helper'
 require 'support/factory_bot'
 
-require 'support/matchers/have_item_with'
 require 'support/matchers/have_json_body'
-require 'support/matchers/with_size'
 require 'support/shared_contexts/when_user_signed_in'
 
 RSpec.describe 'Api::V1::Transactions' do
@@ -23,17 +21,10 @@ RSpec.describe 'Api::V1::Transactions' do
     end
 
     it { is_expected.to have_http_status(:ok) }
-    it { is_expected.to have_json_body(transactions: with_size(1)) }
 
-    it "includes current user's transaction" do
+    it "includes only current user's transaction" do
       expect(http_response).to have_json_body(
-        transactions: have_item_with(amount_cents: 1_00)
-      )
-    end
-
-    it "does not include other users' transactions" do
-      expect(http_response).to have_json_body(
-        transactions: have_no_item_with(amount_cents: 2_00)
+        transactions: [include(amount_cents: 1_00)]
       )
     end
   end
@@ -64,7 +55,7 @@ RSpec.describe 'Api::V1::Transactions' do
           }
         }
       end
-      let!(:category) { create(:category) }
+      let(:category) { create(:category) }
 
       it { is_expected.to have_http_status(:created) }
       it { is_expected.to have_json_body(expected_response) }
