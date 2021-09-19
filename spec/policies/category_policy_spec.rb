@@ -2,20 +2,29 @@
 
 require 'rails_helper'
 require 'action_policy/rspec/dsl'
+require 'support/factory_bot'
 
 RSpec.describe CategoryPolicy do
   let(:user) { build(:user) }
   let(:context) { { user: user } }
 
   describe_rule :index? do
-    pending "add some examples to (or delete) #{__FILE__}"
+    succeed 'unconditionally'
   end
 
-  describe_rule :create? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
+  describe '#relation_scope' do
+    subject(:relation_scope) do
+      policy.apply_scope(Category.all, type: :active_record_relation)
+    end
 
-  describe_rule :manage? do
-    pending "add some examples to (or delete) #{__FILE__}"
+    let!(:public_category) { create(:category) }
+    let!(:owned_category) { create(:category, :private, user: user) }
+    let!(:private_category) { create(:category, :private) }
+
+    it 'includes only owned and public categories' do
+      expect(relation_scope).to match_array(
+        [public_category, owned_category]
+      )
+    end
   end
 end
