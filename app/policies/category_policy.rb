@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-# Authorization for Category
+# Authorization for Category.
+# See https://actionpolicy.evilmartians.io/#/writing_policies
 class CategoryPolicy < ApplicationPolicy
   def index?
     true

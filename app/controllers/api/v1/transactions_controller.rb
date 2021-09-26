@@ -8,6 +8,15 @@ module Api
         render json: { transactions: current_user.transactions }
       end
 
+      def show
+        transaction = Transaction.find(params[:id])
+        render(
+          json: transaction,
+          serializer: DetailedTransactionSerializer,
+          location: api_v1_transaction_path(transaction)
+        )
+      end
+
       def create
         transaction = Transaction.new(transaction_params)
 
@@ -15,6 +24,19 @@ module Api
           render(
             json: transaction,
             status: :created,
+            location: api_v1_transaction_path(transaction)
+          )
+        else
+          render json: transaction, status: :unprocessable_entity
+        end
+      end
+
+      def update
+        transaction = Transaction.find(params[:id])
+
+        if transaction.update(transaction_params)
+          render(
+            json: transaction,
             location: api_v1_transaction_path(transaction)
           )
         else

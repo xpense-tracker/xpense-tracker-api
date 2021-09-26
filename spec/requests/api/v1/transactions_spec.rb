@@ -3,9 +3,7 @@
 require 'rails_helper'
 require 'support/factory_bot'
 
-require 'support/matchers/have_item_with'
 require 'support/matchers/have_json_body'
-require 'support/matchers/with_size'
 require 'support/shared_contexts/when_user_signed_in'
 
 RSpec.describe 'Api::V1::Transactions' do
@@ -23,17 +21,39 @@ RSpec.describe 'Api::V1::Transactions' do
     end
 
     it { is_expected.to have_http_status(:ok) }
-    it { is_expected.to have_json_body(transactions: with_size(1)) }
 
-    it "includes current user's transaction" do
+    it "includes only current user's transaction" do
       expect(http_response).to have_json_body(
-        transactions: have_item_with(amount_cents: 1_00)
+        transactions: [include(amount_cents: 1_00)]
       )
     end
+  end
 
-    it "does not include other users' transactions" do
+  describe 'GET /api/v1/transactions/:id' do
+    subject(:http_response) do
+      get api_v1_transaction_path(transaction)
+      response
+    end
+
+    include_context 'when user signed in'
+
+    let(:transaction) { create(:transaction, category: category) }
+    let(:category) { create(:category, title: 'Food', description: '') }
+    let(:expected_transaction_data) do
+      {
+        amount: { cents: 1_00, currency_iso: 'USD' },
+        category: expected_category_data
+      }
+    end
+    let(:expected_category_data) do
+      { title: 'Food', description: '', icon_url: be_a(String) }
+    end
+
+    it { is_expected.to have_http_status(:ok) }
+
+    it 'responds with transaction and category data' do
       expect(http_response).to have_json_body(
-        transactions: have_no_item_with(amount_cents: 2_00)
+        transaction: expected_transaction_data
       )
     end
   end
@@ -64,11 +84,31 @@ RSpec.describe 'Api::V1::Transactions' do
           }
         }
       end
-      let!(:category) { create(:category) }
+      let(:category) { create(:category) }
 
       it { is_expected.to have_http_status(:created) }
       it { is_expected.to have_json_body(expected_response) }
     end
+  end
+
+  describe 'PATCH /api/v1/transactions' do
+    subject(:http_response) do
+      patch api_v1_transaction_path(transaction), params: {
+        transaction: params
+      }
+      response
+    end
+
+    include_context 'when user signed in'
+
+    let(:transaction) { create(:transaction) }
+    let(:params) { { amount_cents: 3_00 } }
+    let(:expected_body) do
+      { amount: { cents: 3_00, currency_iso: 'USD' } }
+    end
+
+    it { is_expected.to have_http_status(:ok) }
+    it { is_expected.to have_json_body(transaction: include(expected_body)) }
   end
 
   describe 'DELETE /api/v1/transactions/:id' do

@@ -9,7 +9,7 @@ RSpec.describe Authentication::UserById do
 
   describe '#to_model' do
     context 'when user with given id exists' do
-      let!(:user_from_database) { create(:user) }
+      let(:user_from_database) { create(:user) }
       let(:id) { user_from_database.id }
 
       it 'returns user from database' do
