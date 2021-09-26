@@ -17,15 +17,12 @@ RSpec.describe CategoryPolicy do
       policy.apply_scope(Category.all, type: :active_record_relation)
     end
 
-    before { create(:category, :private) }
-
-    let!(:public_category) { create(:category) }
-    let!(:owned_category) { create(:category, :private, user: user) }
-
     it 'includes only owned and public categories' do
-      expect(relation_scope).to match_array(
-        [public_category, owned_category]
-      )
+      _private_category = create(:category, :private)
+      public_category = create(:category)
+      owned_category = create(:category, :private, user: user)
+
+      expect(relation_scope).to match_array([public_category, owned_category])
     end
   end
 end
