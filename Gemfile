@@ -11,7 +11,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'jwt'
 gem 'money-rails', '~> 1.12'
 gem 'pg', '~> 1.1'
-gem 'puma', '~> 5.0'
+gem 'puma', '~> 5.5'
 gem 'rails', '~> 6.1.4'
 
 # Use Active Storage variant
