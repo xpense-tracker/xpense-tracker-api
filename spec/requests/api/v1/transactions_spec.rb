@@ -41,12 +41,12 @@ RSpec.describe 'Api::V1::Transactions' do
     let(:category) { create(:category, title: 'Food', description: '') }
     let(:expected_transaction_data) do
       {
-        amount: { cents: 1_00, currency_iso: 'USD' },
+        amount: { cents: 1_00, currency: 'USD' },
         category: expected_category_data
       }
     end
     let(:expected_category_data) do
-      { title: 'Food', description: '', icon_url: be_a(String) }
+      { title: 'Food', description: '', iconUrl: be_a(String) }
     end
 
     it { is_expected.to have_http_status(:ok) }
@@ -79,7 +79,7 @@ RSpec.describe 'Api::V1::Transactions' do
           transaction: {
             amount: {
               cents: 1_00,
-              currency_iso: 'USD'
+              currency: 'USD'
             }
           }
         }
@@ -104,7 +104,7 @@ RSpec.describe 'Api::V1::Transactions' do
     let(:transaction) { create(:transaction) }
     let(:params) { { amount_cents: 3_00 } }
     let(:expected_body) do
-      { amount: { cents: 3_00, currency_iso: 'USD' } }
+      { amount: { cents: 3_00, currency: 'USD' } }
     end
 
     it { is_expected.to have_http_status(:ok) }

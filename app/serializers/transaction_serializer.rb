@@ -2,5 +2,9 @@
 
 # Serializes Transaction
 class TransactionSerializer < ApplicationSerializer
-  attributes :amount
+  type 'transaction'
+
+  has_one :amount do
+    MoneySerializer::Money.new(object.amount)
+  end
 end
