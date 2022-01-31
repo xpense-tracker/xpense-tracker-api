@@ -4,5 +4,5 @@
 class CategorySerializer < ApplicationSerializer
   type 'category'
 
-  attributes :title, :description, :icon_url
+  attributes :id, :title, :description, :icon_url
 end

@@ -41,12 +41,18 @@ RSpec.describe 'Api::V1::Transactions' do
     let(:category) { create(:category, title: 'Food', description: '') }
     let(:expected_transaction_data) do
       {
+        id: be_a(String),
         amount: { cents: 1_00, currency: 'USD' },
         category: expected_category_data
       }
     end
     let(:expected_category_data) do
-      { title: 'Food', description: '', iconUrl: be_a(String) }
+      {
+        id: be_a(String),
+        title: 'Food',
+        description: '',
+        iconUrl: be_a(String)
+      }
     end
 
     it { is_expected.to have_http_status(:ok) }
@@ -77,6 +83,7 @@ RSpec.describe 'Api::V1::Transactions' do
       let(:expected_response) do
         {
           transaction: {
+            id: be_a(String),
             amount: {
               cents: 1_00,
               currency: 'USD'
