@@ -37,7 +37,7 @@ RSpec.describe 'Api::V1::Transactions' do
 
     include_context 'when user signed in'
 
-    let(:transaction) { create(:transaction, category: category) }
+    let(:transaction) { create(:transaction, category:) }
     let(:category) { create(:category, title: 'Food', description: '') }
     let(:expected_transaction_data) do
       {

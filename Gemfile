@@ -10,10 +10,10 @@ gem 'active_model_serializers', '~> 0.10.12'
 gem 'bcrypt', '~> 3.1.7'
 gem 'jwt'
 gem 'money-rails', '~> 1.12'
+gem 'net-smtp', require: false
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.5'
 gem 'rails', '~> 7.0.1'
-gem 'net-smtp', require: false
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
