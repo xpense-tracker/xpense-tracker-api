@@ -12,7 +12,7 @@ gem 'jwt'
 gem 'money-rails', '~> 1.12'
 gem 'net-smtp', require: false
 gem 'pg', '~> 1.1'
-gem 'puma', '~> 5.5'
+gem 'puma', '~> 5.6'
 gem 'rails', '~> 7.0.1'
 
 # Use Active Storage variant
