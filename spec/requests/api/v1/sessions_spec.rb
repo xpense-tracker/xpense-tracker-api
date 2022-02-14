@@ -19,7 +19,7 @@ RSpec.describe 'Api::V1::Sessions' do
       before { create(:user, session_params) }
 
       it { is_expected.to have_http_status(:ok) }
-      it { is_expected.to have_json_body(session: have_key(:access_token)) }
+      it { is_expected.to have_json_body(session: have_key(:accessToken)) }
       it { is_expected.to have_json_body(session: have_no_key(:errors)) }
     end
 

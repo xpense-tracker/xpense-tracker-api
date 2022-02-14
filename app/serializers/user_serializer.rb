@@ -2,5 +2,7 @@
 
 # Serializes User
 class UserSerializer < ApplicationSerializer
+  type 'user'
+
   attributes :email, :name
 end

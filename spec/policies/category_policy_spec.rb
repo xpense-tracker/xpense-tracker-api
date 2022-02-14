@@ -20,7 +20,7 @@ RSpec.describe CategoryPolicy do
     it 'includes only owned and public categories' do
       _private_category = create(:category, :private)
       public_category = create(:category)
-      owned_category = create(:category, :private, user: user)
+      owned_category = create(:category, :private, user:)
 
       expect(relation_scope).to match_array([public_category, owned_category])
     end

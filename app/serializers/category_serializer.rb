@@ -2,5 +2,7 @@
 
 # Serializes Category
 class CategorySerializer < ApplicationSerializer
-  attributes :title, :description, :icon_url
+  type 'category'
+
+  attributes :id, :title, :description, :icon_url
 end

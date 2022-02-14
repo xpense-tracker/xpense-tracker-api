@@ -19,7 +19,7 @@ module Authentication
     validates_with UserMustBeAuthenticated
 
     def to_model
-      @to_model ||= User.find_by!(email: email).authenticate(password)
+      @to_model ||= User.find_by!(email:).authenticate(password)
     rescue ActiveRecord::RecordNotFound
       @to_model = Authentication::NullUser.new
     end
