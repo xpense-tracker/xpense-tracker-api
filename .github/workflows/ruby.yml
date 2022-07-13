@@ -1,6 +1,6 @@
 name: Ruby
 
-on: [push]
+on: [push, pull_request]
 
 env:
   POSTGRES_USER: postgres
@@ -33,24 +33,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Read .ruby-version
-        id: rubyversion
-        run: echo ::set-output name=RUBYVERSION::$(cat .ruby-version)
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '${{ steps.rubyversion.outputs.RUBYVERSION }}'
-
-      - name: Cache bundle
-        uses: actions/cache@v1
-        with:
-          path: .bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: ${{ runner.os }}-gems-
-      - name: Install gems
-        run: |
-          gem install bundler
-          bundle config set path .bundle
-          bundle install --jobs 4
+          bundler-cache: true
 
       - name: Run Rubocop
         run: bin/rubocop
